@@ -1,67 +1,166 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Grozdov Art Jewelry</title>
-  <meta name="description" content="Handmade sterling silver jewelry with natural gemstones.">
-<style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    color: #222;
-  }
+  <meta name="description" content="One-of-a-kind sterling silver jewelry handcrafted with natural gemstones.">
 
-  .hero {
-    position: relative;
-    height: 100vh;
-    background: url('photo.jpg') center/cover no-repeat;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-  .overlay {
-    background: rgba(0, 0, 0, 0.35);
-    padding: 40px;
-    text-align: center;
-    color: white;
-  }
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f6edcf;
+      color: #29251d;
+    }
 
-  h1 {
-    font-size: 48px;
-    margin-bottom: 10px;
-    letter-spacing: 2px;
-  }
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 8%;
+    }
 
-  p {
-    font-size: 18px;
-    margin-bottom: 25px;
-  }
+    .hero-container {
+      width: 100%;
+      max-width: 1250px;
+      display: grid;
+      grid-template-columns: 0.85fr 1.15fr;
+      align-items: center;
+      gap: 70px;
+    }
 
-  .button {
-    padding: 14px 28px;
-    background: white;
-    color: black;
-    text-decoration: none;
-    border-radius: 999px;
-    font-size: 16px;
-  }
+    .hero-text {
+      max-width: 500px;
+    }
 
-  .button:hover {
-    background: #ddd;
-  }
-</style>
+    h1 {
+      font-size: clamp(44px, 5vw, 72px);
+      line-height: 1.05;
+      margin: 0 0 24px;
+      font-weight: 600;
+      letter-spacing: -2px;
+    }
+
+    .tagline {
+      font-size: 22px;
+      line-height: 1.5;
+      margin: 0 0 18px;
+    }
+
+    .description {
+      font-size: 17px;
+      line-height: 1.6;
+      color: #655d4c;
+      margin: 0 0 36px;
+    }
+
+    .shop-button {
+      display: inline-block;
+      padding: 15px 30px;
+      background: #29251d;
+      color: white;
+      text-decoration: none;
+      border-radius: 30px;
+      font-size: 16px;
+    }
+
+    .shop-button:hover {
+      opacity: 0.85;
+    }
+
+    .small-note {
+      margin-top: 18px;
+      font-size: 13px;
+      color: #7d735e;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .hero-image img {
+      width: 100%;
+      max-height: 760px;
+      object-fit: cover;
+      display: block;
+      border-radius: 4px;
+    }
+
+    @media (max-width: 800px) {
+      .hero {
+        padding: 35px 24px 50px;
+      }
+
+      .hero-container {
+        grid-template-columns: 1fr;
+        gap: 35px;
+      }
+
+      .hero-text {
+        order: 2;
+      }
+
+      .hero-image {
+        order: 1;
+      }
+
+      h1 {
+        font-size: 44px;
+      }
+
+      .tagline {
+        font-size: 19px;
+      }
+
+      .hero-image img {
+        max-height: 60vh;
+      }
+    }
+  </style>
+</head>
 
 <body>
-  <div class="hero">
-    <div class="overlay">
-      <h1>Grozdov Art Jewelry</h1>
-      <p>Handmade sterling silver jewelry with natural gemstones</p>
 
-      <a class="button" href="https://grozdovs.square.site" target="_blank">
-        Shop
-      </a>
+  <main class="hero">
+    <div class="hero-container">
+
+      <section class="hero-text">
+        <h1>Jewelry made only once.</h1>
+
+        <p class="tagline">
+          One-of-a-kind sterling silver jewelry,
+          handcrafted around natural gemstones.
+        </p>
+
+        <p class="description">
+          Every stone is different. Every piece is designed and made by hand
+          to bring out the character that was already there.
+        </p>
+
+        <a class="shop-button"
+           href="https://grozdovs.square.site"
+           target="_blank"
+           rel="noopener">
+          Explore the collection
+        </a>
+
+        <div class="small-note">
+          Handcrafted in California
+        </div>
+      </section>
+
+      <div class="hero-image">
+        <img src="autumn-ring.jpg"
+             alt="Handcrafted sterling silver gemstone ring by Grozdov Art">
+      </div>
+
     </div>
-  </div>
+  </main>
+
 </body>
+</html>
