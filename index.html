@@ -91,6 +91,39 @@
       border-radius: 4px;
     }
 
+    .site-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 32px 8%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+}
+
+.brand {
+  color: #29251d;
+  text-decoration: none;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.nav-shop {
+  color: #29251d;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+}
+
+.brand:hover,
+.nav-shop:hover {
+  opacity: 0.6;
+}
+    
     @media (max-width: 800px) {
       .hero {
         padding: 35px 24px 50px;
@@ -126,6 +159,16 @@
 
 <body>
 
+  <header class="site-header">
+    <a class="brand" href="/">GROZDOV ART</a>
+    <a class="nav-shop"
+       href="https://grozdovs.square.site"
+       target="_blank"
+       rel="noopener">
+      SHOP
+    </a>
+  </header>
+  
   <main class="hero">
     <div class="hero-container">
 
