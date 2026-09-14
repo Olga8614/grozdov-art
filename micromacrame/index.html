@@ -133,7 +133,8 @@
 
     .hero-price {
   margin-top: 28px;
-  padding: 20px 24px;
+  max-width: 440px;
+  padding: 16px 20px;
 
   background: var(--dark-green);
   color: white;
@@ -144,10 +145,10 @@
 .hero-price-line {
   display: flex;
   align-items: baseline;
-  gap: 13px;
+  gap: 10px;
 
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 1.65rem;
+  font-size: 1.35rem;
 }
 
 .hero-price-line b {
@@ -157,26 +158,26 @@
 
 .hero-total {
   color: #f1dfbd;
-  font-size: 2rem;
+  font-size: 1.65rem;
 }
 
 .hero-price-labels {
-  margin-top: 3px;
+  margin-top: 4px;
 
   color: #ead8b8;
-  font-size: 0.82rem;
+  font-size: 0.76rem;
   font-weight: bold;
 }
 
 .hero-price-note {
-  margin-top: 12px;
-  padding-top: 11px;
+  margin-top: 10px;
+  padding-top: 9px;
 
   border-top: 1px solid rgba(255,255,255,0.22);
 
   color: rgba(255,255,255,0.85);
-  font-size: 0.78rem;
-  line-height: 1.45;
+  font-size: 0.72rem;
+  line-height: 1.4;
 }
 
 
@@ -706,6 +707,7 @@
 
   <div class="container">
 
+    <!-- LEFT SIDE -->
     <div class="hero-box">
 
       <div class="eyebrow">
@@ -727,29 +729,37 @@
         three pieces of jewelry made by you.
       </p>
 
+
+      <!-- SMALL PRICE BOX -->
+      <div class="hero-price">
+
+        <div class="hero-price-line">
+          <span>$32.40</span>
+          <b>+</b>
+          <span>$30</span>
+          <b>=</b>
+          <span class="hero-total">$62.40</span>
+        </div>
+
+        <div class="hero-price-labels">
+          Workshop fee + required take-home starter kit
+        </div>
+
+        <div class="hero-price-note">
+          Includes all materials for your three projects,
+          plus a work board or cushion and pins.
+          Everything you make and all remaining kit materials
+          are yours to keep.
+        </div>
+
+      </div>
+      <!-- END PRICE BOX -->
+
     </div>
-    <div class="hero-price">
+    <!-- END LEFT SIDE -->
 
-  <div class="hero-price-line">
-    <span>$32.40</span>
-    <b>+</b>
-    <span>$30</span>
-    <b>=</b>
-    <span class="hero-total">$62.40</span>
-  </div>
 
-  <div class="hero-price-labels">
-    Workshop fee + required take-home starter kit
-  </div>
-
-  <div class="hero-price-note">
-    The starter kit includes all materials for your three projects,
-    plus a work board or cushion and pins. Everything you make
-    and all remaining kit materials are yours to keep.
-  </div>
-
-</div>
-
+    <!-- RIGHT SIDE -->
     <div class="hero-photo">
       <img
         src="macrame-model.png"
