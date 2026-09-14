@@ -61,30 +61,43 @@
        ========================= */
 
     .hero {
-      min-height: 650px;
-      display: flex;
-      align-items: flex-end;
+  background: var(--cream);
+  padding: 45px 0;
+}
 
-      background:
-        linear-gradient(
-          rgba(25, 40, 28, 0.06),
-          rgba(25, 40, 28, 0.12)
-        ),
-        url("macrame-model.png") center 35% / cover no-repeat;
-    }
+.hero .container {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  max-width: 1200px;
+  min-height: 570px;
+  align-items: stretch;
+}
 
-    .hero-box {
-      max-width: 630px;
-      margin-bottom: 45px;
-      padding: 36px 42px;
+.hero-box {
+  margin: 0;
+  padding: 55px 50px;
 
-      background: rgba(247, 241, 229, 0.95);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-      border-radius: 5px;
+  background: var(--cream);
+  box-shadow: none;
+  border-radius: 0;
+}
 
-      box-shadow:
-        0 8px 30px rgba(0, 0, 0, 0.16);
-    }
+.hero-photo {
+  min-height: 570px;
+}
+
+.hero-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  /* Show the face AND the pendant */
+  object-position: center center;
+}
 
     .eyebrow {
       color: var(--terracotta);
@@ -572,50 +585,63 @@
        MOBILE
        ========================= */
 
-    @media (max-width: 750px) {
+   @media (max-width: 750px) {
 
-      .hero {
-        min-height: 600px;
-        background-position: 43% center;
-      }
+  .hero {
+    padding: 0;
+  }
 
-      .hero-box {
-        width: calc(100% - 30px);
+  .hero .container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    min-height: auto;
+  }
 
-        margin: 0 15px 20px;
+  .hero-box {
+    width: 100%;
+    margin: 0;
+    padding: 38px 25px;
+  }
 
-        padding: 26px;
-      }
+  .hero-photo {
+    min-height: 0;
+  }
 
-      .highlights,
-      .project-grid,
-      .details-grid,
-      .supply-grid,
-      .practice-grid {
-        grid-template-columns: 1fr;
-      }
+  .hero-photo img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
 
-      .project-grid {
-        max-width: 500px;
+  .highlights,
+  .project-grid,
+  .details-grid,
+  .supply-grid,
+  .practice-grid {
+    grid-template-columns: 1fr;
+  }
 
-        margin-left: auto;
-        margin-right: auto;
-      }
+  .project-grid {
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-      .intro,
-      .projects,
-      .details,
-      .supply-section,
-      .practice {
-        padding-top: 50px;
-        padding-bottom: 50px;
-      }
+  .intro,
+  .projects,
+  .details,
+  .supply-section,
+  .practice {
+    padding-top: 50px;
+    padding-bottom: 50px;
+  }
 
-      .details-grid,
-      .supply-grid {
-        gap: 35px;
-      }
-    }
+  .details-grid,
+  .supply-grid {
+    gap: 35px;
+  }
+}
 
   </style>
 </head>
@@ -628,36 +654,43 @@
        HERO
        ========================= -->
 
-  <header class="hero">
+ <header class="hero">
 
-    <div class="container">
+  <div class="container">
 
-      <div class="hero-box">
+    <div class="hero-box">
 
-        <div class="eyebrow">
-          Grozdov Art Presents
-        </div>
-
-        <h1>
-          Micro Macramé<br>
-          Jewelry Workshop
-        </h1>
-
-        <p class="subtitle">
-          Learn • Create • Take Home
-        </p>
-
-        <p class="hero-description">
-          Spend three creative hours learning micro macramé
-          and turn natural stones, beads and cord into
-          three pieces of jewelry made by you.
-        </p>
-
+      <div class="eyebrow">
+        Grozdov Art Presents
       </div>
+
+      <h1>
+        Micro Macramé<br>
+        Jewelry Workshop
+      </h1>
+
+      <p class="subtitle">
+        Learn • Create • Take Home
+      </p>
+
+      <p class="hero-description">
+        Spend three creative hours learning micro macramé
+        and turn natural stones, beads and cord into
+        three pieces of jewelry made by you.
+      </p>
 
     </div>
 
-  </header>
+    <div class="hero-photo">
+      <img
+        src="macrame-model.png"
+        alt="Model wearing a natural stone micro macrame pendant"
+      >
+    </div>
+
+  </div>
+
+</header>
 
 
 
