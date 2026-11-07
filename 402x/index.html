@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+  <title>Citizen Problem Reporter</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #f7f5f5;
+      color: #10263d;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      background: #f7f5f5;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ---------- MESSAGE AREA ---------- */
+
+    .message-panel {
+      background: #c9e3fb;
+      min-height: 58vh;
+      padding: 24px 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+
+    .control-panel {
+      justify-content: center;
+    }
+
+    .app-title {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 400;
+      line-height: 1.35;
+    }
+
+    .persuasive-copy {
+      margin-top: 55px;
+    }
+
+    .persuasive-copy p {
+      margin: 0;
+      font-size: 21px;
+      line-height: 1.65;
+    }
+
+    .reassurance {
+      margin-top: 22px !important;
+      font-size: 16px !important;
+      line-height: 1.55 !important;
+      font-style: italic;
+    }
+
+    /* ---------- BUTTON AREA ---------- */
+
+    .choices {
+      padding: 18px 30px 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .choice-button {
+      width: 100%;
+      min-height: 58px;
+      border: none;
+      border-radius: 0;
+      background: #086bb7;
+      color: white;
+      font-size: 17px;
+      font-weight: 400;
+      cursor: pointer;
+    }
+
+    .choice-button:active {
+      transform: scale(0.99);
+    }
+
+    /* ---------- ADMIN PANEL ---------- */
+
+    .admin-panel {
+      display: none;
+      margin: 20px;
+      padding: 15px;
+      border: 1px solid #aaa;
+      background: white;
+      color: #222;
+      font-size: 14px;
+    }
+
+    .admin-panel.visible {
+      display: block;
+    }
+
+    .admin-panel input {
+      width: 70px;
+      padding: 5px;
+      margin: 5px;
+    }
+
+    .admin-panel button {
+      padding: 6px 10px;
+      margin: 4px;
+    }
+
+    @media (min-width: 700px) {
+      body {
+        padding-top: 30px;
+      }
+
+      .app {
+        min-height: 720px;
+        border: 1px solid #ccc;
+      }
+
+      .message-panel {
+        min-height: 430px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <main id="cover"></main>
+
+  <div id="adminPanel" class="admin-panel">
+    <strong>Researcher controls</strong>
+
+    <p>
+      Next participant:
+      <strong id="participantNumber"></strong>
+    </p>
+
+    <p>
+      Next condition:
+      <strong id="conditionName"></strong>
+    </p>
+
+    <label>
+      Set next participant number:
+      <input id="participantInput" type="number" min="1">
+    </label>
+
+    <button onclick="setParticipantNumber()">Set</button>
+    <button onclick="resetExperiment()">Reset to 1</button>
+  </div>
+
+</div>
+
+
+<script>
+
+  /* ==========================================================
+     SURVEY123 FORMS
+     ========================================================== */
+
+  const portal =
+    "https://testexb.maps.arcgis.com";
+
+  const surveys = {
+
+    // CONTROL / NO PERSUASION
+
+    controlManual:
+      "https://survey123.arcgis.com/share/5f9784a9971a4c32b6647059d9647b6f" +
+      "?portalUrl=" + encodeURIComponent(portal),
+
+    controlAI:
+      "https://survey123.arcgis.com/share/4686ddd6478244689d27d384c34df3a6" +
+      "?portalUrl=" + encodeURIComponent(portal),
+
+
+    // PERSUASIVE
+
+    persuasiveManual:
+      "https://survey123.arcgis.com/share/f06453f686fd479982e6c77bf42befc5" +
+      "?portalUrl=" + encodeURIComponent(portal),
+
+    persuasiveAI:
+      "https://survey123.arcgis.com/share/a4f03ebf32ea48c88f6258d778ecf71a" +
+      "?portalUrl=" + encodeURIComponent(portal)
+  };
+
+
+  /* ==========================================================
+     PARTICIPANT COUNTER
+     ========================================================== */
+
+  const STORAGE_KEY = "citizenReporterParticipant";
+
+  function getParticipantNumber() {
+
+    const saved =
+      parseInt(localStorage.getItem(STORAGE_KEY), 10);
+
+    if (!saved || saved < 1) {
+      return 1;
+    }
+
+    return saved;
+  }
+
+
+  function isControl(participantNumber) {
+
+    // Odd participants = Control
+    // Even participants = Persuasive
+
+    return participantNumber % 2 === 1;
+  }
+
+
+  /* ==========================================================
+     DRAW COVER
+     ========================================================== */
+
+  function renderCover() {
+
+    const participant = getParticipantNumber();
+    const control = isControl(participant);
+
+    const cover = document.getElementById("cover");
+
+
+    if (control) {
+
+      cover.innerHTML = `
+        <section class="message-panel control-panel">
+
+          <h1 class="app-title">
+            Report a Community<br>
+            Problem
+          </h1>
+
+        </section>
+
+        <section class="choices">
+
+          <button
+            class="choice-button"
+            onclick="openSurvey('controlManual')">
+            Fill Out Manually
+          </button>
+
+          <button
+            class="choice-button"
+            onclick="openSurvey('controlAI')">
+            Fill Out Using AI
+          </button>
+
+        </section>
+      `;
+
+    } else {
+
+      cover.innerHTML = `
+        <section class="message-panel">
+
+          <h1 class="app-title">
+            Report a Community<br>
+            Problem
+          </h1>
+
+          <div class="persuasive-copy">
+
+            <p>
+              We recommend choosing the second option.
+              AI will identify the problem and
+              draft the report for you.
+            </p>
+
+            <p class="reassurance">
+              You stay in control – review and edit
+              everything before submitting.
+            </p>
+
+          </div>
+
+        </section>
+
+        <section class="choices">
+
+          <button
+            class="choice-button"
+            onclick="openSurvey('persuasiveManual')">
+            Fill Out Manually
+          </button>
+
+          <button
+            class="choice-button"
+            onclick="openSurvey('persuasiveAI')">
+            Fill Out Using AI
+          </button>
+
+        </section>
+      `;
+    }
+
+
+    updateAdminPanel();
+  }
+
+
+  /* ==========================================================
+     OPEN SURVEY + ADVANCE CONDITION
+     ========================================================== */
+
+  function openSurvey(surveyName) {
+
+    const participant = getParticipantNumber();
+
+    /*
+       Advance counter BEFORE leaving the page.
+
+       Therefore:
+       participant 1 = Control
+       participant 2 = Persuasive
+       participant 3 = Control
+       etc.
+
+       Refreshing the cover itself does NOT change condition.
+    */
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      participant + 1
+    );
+
+    window.location.href = surveys[surveyName];
+  }
+
+
+  /* ==========================================================
+     ADMIN MODE
+     Open:
+     index.html?admin=1
+     ========================================================== */
+
+  function adminModeEnabled() {
+
+    const params =
+      new URLSearchParams(window.location.search);
+
+    return params.get("admin") === "1";
+  }
+
+
+  function updateAdminPanel() {
+
+    if (!adminModeEnabled()) {
+      return;
+    }
+
+    const panel =
+      document.getElementById("adminPanel");
+
+    panel.classList.add("visible");
+
+    const participant =
+      getParticipantNumber();
+
+    document.getElementById(
+      "participantNumber"
+    ).textContent = participant;
+
+    document.getElementById(
+      "conditionName"
+    ).textContent =
+      isControl(participant)
+        ? "CONTROL"
+        : "PERSUASIVE";
+
+    document.getElementById(
+      "participantInput"
+    ).value = participant;
+  }
+
+
+  function setParticipantNumber() {
+
+    const value =
+      parseInt(
+        document.getElementById(
+          "participantInput"
+        ).value,
+        10
+      );
+
+    if (!value || value < 1) {
+      alert("Enter a participant number of 1 or greater.");
+      return;
+    }
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      value
+    );
+
+    renderCover();
+  }
+
+
+  function resetExperiment() {
+
+    const confirmed =
+      confirm(
+        "Reset the next participant to #1 (Control)?"
+      );
+
+    if (!confirmed) {
+      return;
+    }
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      1
+    );
+
+    renderCover();
+  }
+
+
+  /* ==========================================================
+     START
+     ========================================================== */
+
+  renderCover();
+
+</script>
+
+</body>
+</html>
